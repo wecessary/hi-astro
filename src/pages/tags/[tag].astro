@@ -1,0 +1,36 @@
+---
+import type { MarkdownInstance } from "astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogPost from "../../components/BlogPost.astro";
+import type { FrontMatter } from "../../scripts/model";
+
+export async function getStaticPaths() {
+  const allPosts = await Astro.glob<FrontMatter>("../posts/*.md");
+  const allTags = allPosts.map((post) => post.frontmatter.tags).flat();
+  const uniqueTags = Array.from(new Set(allTags));
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) =>
+      post.frontmatter.tags.includes(tag)
+    );
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+interface Props {
+  posts: MarkdownInstance<FrontMatter>[];
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout pageTitle={tag || ""}>
+  <p>Posts tagged with {tag}</p>
+  <ul>
+    {posts.map((post) => <BlogPost post={post} />)}
+  </ul>
+</BaseLayout>

@@ -1,0 +1,14 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { FrontMatter } from "../scripts/model";
+
+interface Props {
+  post: MarkdownInstance<FrontMatter>;
+}
+
+const { post } = Astro.props;
+---
+
+<li>
+  <a href={post.url}>{post.frontmatter.title}</a>
+</li>

@@ -10,7 +10,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^2.7.0"
+    "@astrojs/preact": "^2.2.1",
+    "@astrojs/rss": "^2.4.3",
+    "astro": "^2.7.0",
+    "preact": "^10.6.5"
   },
   "devDependencies": {
     "prettier": "^2.8.8",
